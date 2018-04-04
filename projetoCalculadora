@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<style type="text/css">
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+a{color: w3blue;}
+input[type=number] {
+    width: 35%;
+    padding: 5px 15px;
+    margin: 4px 1;
+    border: 1px solid;
+    border-radius: 2px;
+    box-sizing: border-box;
+    background-color: lightgray;
+  }
+  select{
+    width: 16%;
+    padding: 3.5px 2px;
+    margin: 4px 1;
+    border: 1px solid;
+    border-radius: 2px;
+    box-sizing: border-box;
+    background-color: lightgray;
+  }  
+</style>
+<head>
+	<title>Calculadora de Juros</title>
+	<link rel="icon" href="http://www.iconarchive.com/download/i104082/blackvariant/shadow135-system/Calculator.ico">
+  <script type="text/javascript">   
+    function calculo(){ 
+      var valIni = document.getElementById('valorinicial').value; //Recebe o valor inicial de depósito
+      var depPer = document.getElementById('depositop').value; //Recebe o valor dos depósitos mensais
+      var taxJur = document.getElementById('taxa').value; //Recebe o valor da taxa de juros
+      var per = document.getElementById('ndep').value; //Recebe o período em que o usuário fará depósitos
+      if (calculadora.periodo.value=="anos") {per=per*12;} //Se o usuário escolher "anos", transforma o valor de anos em meses.
+      var depTot = parseInt(valIni)+(depPer*per); //Descobre quanto a pessoa depositou durante o período escolhido ao somar o valor inicial e a multiplicação do valor mensal pelo número de meses.
+      var taxJurt=taxJur/100; //Valor bruto da porcentagem
+      var pPot = 1+taxJurt; //Variável que guarda o valor da primeira parte da operação (P(1+i)^n)
+      pPot = Math.pow(pPot, per); //Fazendo (1+i)^n
+      var valFinal = pPot*valIni; //Variável que guardará o valor final
+      var sPot = pPot; //Segunda parte da operação ( T((1+i)^n - 1)/i )
+      sPot = depPer*(sPot-1)/taxJurt; //Continua a segunda parte da operação
+      valFinal = valFinal + sPot; //Soma tudo no valor final
+      valFinala = valFinal.toFixed(2); //Arruma a apresentação do valor final, dando apenas 2 casas decimais para os centavos
+      ganJu = valFinal-depTot;
+      ganJua = ganJu.toFixed(2);
+      depTota = depTot.toFixed(2); //Arruma a apresentação do total depositado
+      document.getElementById('001').innerHTML="Total Investido: R$ "+depTota;
+      document.getElementById('002').innerHTML="Total Ganho em Juros: R$ "+ganJua;
+      document.getElementById('003').innerHTML="Total : R$ "+valFinala;
+
+    }
+  </script>
+</head>
+<body>
+<header class="w3-container w3-green w3-center" style="padding:24px 8px;background-size: cover;  position: relative;">
+  <h1 class="w3-margin w3-jumbo">Calculadora de Juros</h1>
+ </header>
+<div class="w3-row-padding w3-padding-128 w3-gray w3-opacity-min" style="padding: 128px">
+    <form class="w3-gray" name="calculadora" style="border-style: solid; padding: 50px;width:50%;margin: auto;"  >
+  <h style="margin-left: 95px;">Valor Inicial</h> <input style="margin-left: 30px;" type="number" id="valorinicial" width="absolute" ><br><br>
+  <h style="margin-left: 85px;">Valor Mensal</h> <input style="margin-left: 30px;" type="number" id="depositop" > <br><br>
+  <h style="margin-left: 8px;">Taxa Percentual de Juros</h> <input style="margin-left: 30px;" type="number" id="taxa" style="margin-right: 3px;"><h style="margin-left: 20px;">%</h> <br><br>
+  <h style="margin-left: 58px;">Período de </h><input style="margin-left: 30px;" type="number" id="ndep"><select style="margin-left: 20px;" id="periodo">
+  <option value="meses">Meses</option>
+  <option value="anos">Anos</option></select><br><br>
+  <button class="w3-green" style="margin-left: 185px;margin-top: 25px;" onclick="calculo()" type="button">Calcular</button><br><br>
+  </form>
+  <div class="w3-gray" style="margin-top: -50px;margin-left: 273px; border-style: solid;width: 50%;padding: 35px 25px;">
+  <p style="margin-top: 10px;" id="001"></p><br>
+  <p style="margin-top: 10px;" id="002"></p><br>
+  <p style="margin-top: 10px;" id="003"></p><br>
+  </div>
+</div>
+<footer style="color:green;position: absolute;bottom: 0px;">
+<div class="w3-xlarge w3-padding-32">  
+ </div>
+</footer>
+</body>
+</html>
