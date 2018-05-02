@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		form {
+			margin: auto;
+   	 		width: 20%;   	 		
+    		border: 3px solid green;
+    		padding: 15px;
+    		text-align: center;
+    		background-color: #98FB98;    		
+		}
+		button{
+			margin: auto;
+   	 		width: 8%;   	 		
+    		border: 2px solid green;
+    		border-top-style: dotted;
+    		border-bottom-style: dotted;
+    		padding: 8px;
+    		text-align: center;
+    		font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+    		}
+	
+	</style>
+	<title>Ferramenta de Composição Corporal</title>	
+	<script type="text/javascript">
+		function calculoComp(){
+		var valP = parseFloat(document.getElementById('peso').value); //Pegando o valor de peso.
+		var valId = parseFloat(document.getElementById('idade').value); //Pegando o valor de idade.
+		var valpD = parseFloat(document.getElementById('pDobra').value); //Pegando o valor da primeira dobra.
+		var valsD = parseFloat(document.getElementById('sDobra').value); //Pegando o valor da segunda dobra.
+		var valtD = parseFloat(document.getElementById('tDobra').value); //Pegando o valor da terceira dobra.
+		var valX12 = valpD+valsD+valtD; //Pegando o valor da soma das três dobras.
+		
+		if (bodybuilder.sex.value=="masc") {
+		var part1M = 0.0008267*valX12;
+		var part2M = 0.0000016*valX12*2;
+		var part3M = 0.0002574*valId; //Separando o cálculo de densidade masculina em 3 partes.
+		var densM = 1.10938-part1M+part2M-part3M; //Cálculo da densidade masculina.	
+		
+
+		var porGM = ((4.95/densM)-4.5)*100; //Calculando o percentual de gordura masculino.	
+		var gorAbM = (valP*porGM)/100; //Calculando o valor de gordura absoluta masculino.	
+		var masMM = valP - gorAbM; //Calculando o valor de massa magra absoluta masculina.		
+		var masCIM = masMM/0.85; //Calculando massa corporal ideal masculina		
+		var masCDM = (masMM - masCIM)*-1; //Calculando a massa corporal desviante masculina	
+
+
+		document.getElementById('pGordura').innerHTML=porGM.toFixed(5)+"%";
+		document.getElementById('gAbsoluta').innerHTML=gorAbM.toFixed(5)+"kg";
+		document.getElementById('mMagra').innerHTML=masMM.toFixed(5)+"kg";
+		document.getElementById('mCorporalI').innerHTML=masCIM.toFixed(5) + "kg";
+		document.getElementById('mCorporalE').innerHTML=masCDM.toFixed(5)+"kg";
+		}else {
+		var part1F = 0.0009929*valX12;
+		var part2F = 0.0000023*valX12*2;
+		var part3F = 0.0001392*valId; //Separando o cálculo de densidade feminina em 3 partes.
+		var densF = 1.099421-part1F+part2F-part3F; //Cálculo da densidade feminina.			
+		
+
+		var porGF = ((4.95/densF)-4.5)*100; //Calculando o percentual de gordura feminino.	
+		var gorAbF = (valP*porGF)/100; //Calculando o valor de gordura absoluta feminina.
+		var masMF = valP - gorAbF; //Calculando o valor de massa magra absoluta feminina.	
+		var masCIF = masMF/0.75; //Calculando massa corporal ideal feminina
+		var masCDF = (masMF - masCIF)*-1; //Calculando a massa corporal desviante feminina
+					
+
+		document.getElementById('pGordura').innerHTML=porGF.toFixed(5)+"%";
+		document.getElementById('gAbsoluta').innerHTML=gorAbF.toFixed(5)+" kg";
+		document.getElementById('mMagra').innerHTML=masMF.toFixed(5)+" kg";
+		document.getElementById('mCorporalI').innerHTML=masCIF.toFixed(5) + " kg";
+		document.getElementById('mCorporalE').innerHTML=masCDF.toFixed(5)+" kg";
+		}
+		}
+		function atualizar(){
+			if (bodybuilder.sex.value=="masc") {
+				document.getElementById('001').innerHTML="Peitoral";
+				document.getElementById('002').innerHTML="Abdominal";
+				document.getElementById('003').innerHTML="Coxa";
+				pDobra.placeholder="Tamanho do Peitoral..";
+				sDobra.placeholder="Tamanho do Abdominal..";
+				tDobra.placeholder="Tamanho da Coxa..";
+			}
+			else{
+				document.getElementById('001').innerHTML="Tríceps";
+				document.getElementById('002').innerHTML="Supra-Ilíaca";
+				document.getElementById('003').innerHTML="Coxa";
+				pDobra.placeholder="Tamanho do Tríceps..";
+				sDobra.placeholder="Tamanho da Supra-Ilíaca..";
+				tDobra.placeholder="Tamanho da Coxa..";
+			}
+
+		}
+		function iframe(){
+			alert('iframe da ferramenta: <iframe src="" height="200" width="1100"></iframe>');
+		}		
+	</script>
+	<link rel="icon" href="https://yagolacerda.github.io/main/coisas%20do%20projeto/imagens/celeste.png">
+</head>
+<body>
+<div>	
+	<form name="bodybuilder">
+		<label for="peso">Peso</label>
+    	<input type="number" id="peso" name="peso" placeholder="Seu peso.."><br><br>
+    	<label for="peso">Idade</label>
+    	<input type="number" id="idade" name="idade" placeholder="Sua idade.."><br><br>
+    	<label for="peso">Sexo</label>
+    	<select id="sex" onclick="atualizar()" >
+    	<option value="masc">Masculino</option>
+    	<option value="fem">Feminino</option></select><br><br>
+    	<label for="pDobra" id="001">Peitoral</label>
+    	<input type="number" id="pDobra" name="pDobra" placeholder="Tamanho do Peitoral.."><br><br>
+    	<label for="sDobra" id="002">Abdominal</label>
+    	<input type="number" id="sDobra" name="sDobra" placeholder="Tamanho do Abdominal.."><br><br>
+    	<label for="tDobra" id="003">Coxa</label>
+    	<input type="number" id="tDobra" name="tDobra" placeholder="Tamanho da Coxa.."><br><br>    	
+	</form>
+	<br><br>
+	<center><button onclick="calculoComp()">Calcular</button></center>
+	<br><br>
+	<form name="resultados">
+		<br>
+		<label>Percentual de Gordura (%)</label>
+		<p id="pGordura"></p><br>
+		<label>Gordura Absoluta (kg)</label>
+		<p id="gAbsoluta"></p><br>
+		<label>Massa Magra Absoluta (kg)</label>
+		<p id="mMagra"></p><br>
+		<label>Massa Corporal Ideal (kg)</label>
+		<p id="mCorporalI"></p><br>
+		<label>Massa Corporal em Excesso (kg)</label>
+		<p id="mCorporalE"></p><br>
+	</form></div>
+	<button style="position: absolute;bottom: 0px;" onclick="iframe()">Embed</button>
+</body>
+</html>
